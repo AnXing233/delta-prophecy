@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="./assets/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Monochrome Tool</title>
+    <style>
+        @font-face {
+            font-family: 'DTMSans';
+            src: url('./assets/fonts/DTM-Sans.otf') format('opentype');
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'DTMSansAlt';
+            src: url('./assets/fonts/DTM.otf') format('opentype');
+            font-display: swap;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'DTMSans', 'DTMSansAlt', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: black;
+            color: white;
+        }
+
+        h1 {
+            margin: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            margin-top: 20px;
+            image-rendering: pixelated;
+            background: #000;
+            border: 2px solid white;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload,
+        #exportButton {
+            display: inline-block;
+            font-family: 'DTMSans', 'DTMSansAlt', sans-serif;
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+            padding: 6px 12px;
+            cursor: pointer;
+            margin: 10px;
+            text-align: center;
+            user-select: none;
+        }
+
+        .custom-file-upload:hover,
+        #exportButton:hover {
+            background-color: #222;
+        }
+
+        .custom-file-upload:active,
+        #exportButton:active {
+            background-color: #111;
+        }
+
+        #thresholdContainer,
+        #invertContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        input[type="range"] {
+            appearance: none;
+            width: 150px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            border-radius: 0px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: white;
+            border: none;
+            border-radius: 0%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: white;
+            border: none;
+            border-radius: 0%;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000;
+            border-radius: 0px;
+            transition: 0.4s;
+            border: 2px solid white;
+            box-sizing: border-box;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 20px;
+            top: 50%;
+            left: 3px;
+            transform: translateY(-50%);
+            background-color: white;
+            border-radius: 0%;
+            transition: 0.4s;
+            box-sizing: border-box;
+            border: none;
+        }
+
+        input:checked+.slider {
+            background-color: #fff;
+            border-color: #000;
+        }
+
+        input:checked+.slider:before {
+            background-color: black;
+            transform: translate(20px, -50%);
+        }
+
+        #info {
+            max-width: 512px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+            max-width: 512px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Monochrome Image Tool | 单色图片工具</h1>
+
+    <input type="file" id="fileInput" accept="image/*" />
+    <label for="fileInput" class="custom-file-upload">上传图片</label>
+
+    <canvas id="preview"></canvas>
+
+    <div id="thresholdContainer">
+        <label for="threshold">阈值：</label>
+        <input type="range" id="threshold" min="0" max="255" value="127" />
+        <span id="thresholdValue">127</span>
+    </div>
+
+    <div id="invertContainer">
+        <label for="invertToggle">反转颜色：</label>
+        <label class="switch">
+            <input type="checkbox" id="invertToggle" />
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <button id="exportButton">导出PNG</button>
+
+    <div id="info">
+        <p>Adjust the threshold slider to change how dark/light the monochrome image is.<br>Toggle invert colors on or
+            off.<br>Then export the result as a PNG.
+            <br />
+            调整阈值滑块以更改单色图像的暗/亮程度。 <br />
+            切换颜色反转开或关。<br />
+            然后将结果导出为PNG。
+        </p>
+    </div>
+
+    <footer>
+        <p>© HippoWaterMelon 2025 - DELTARUNE © 2025 Toby Fox - Determination Sans by Haley Wakamatsu
+            <br />
+            DTM字体fallback使用<a href="https://github.com/XiaoAkatsukiCN/Undertale-Fonts-Extra" target="_blank" rel="noopener noreferrer">Undertale-Fonts-Extra</a>
+        </p>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const canvas = document.getElementById('preview');
+        const ctx = canvas.getContext('2d');
+        const thresholdSlider = document.getElementById('threshold');
+        const thresholdValue = document.getElementById('thresholdValue');
+        const exportButton = document.getElementById('exportButton');
+        const invertToggle = document.getElementById('invertToggle');
+
+        let originalImage = null;
+
+        function applyThreshold(threshold) {
+            if (!originalImage) return;
+
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.drawImage(originalImage, 0, 0);
+
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+            const invert = invertToggle.checked;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i], g = data[i + 1], b = data[i + 2];
+                const brightness = (r + g + b) / 3;
+                let value = brightness > threshold ? 255 : 0;
+
+                if (invert) value = 255 - value;
+
+                data[i] = data[i + 1] = data[i + 2] = value;
+                data[i + 3] = 255;
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        fileInput.addEventListener('change', function () {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const img = new Image();
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                originalImage = document.createElement('canvas');
+                originalImage.width = img.width;
+                originalImage.height = img.height;
+
+                const tempCtx = originalImage.getContext('2d');
+                tempCtx.drawImage(img, 0, 0);
+
+                applyThreshold(parseInt(thresholdSlider.value));
+            };
+
+            const reader = new FileReader();
+            reader.onload = e => img.src = e.target.result;
+            reader.readAsDataURL(file);
+        });
+
+        thresholdSlider.addEventListener('input', () => {
+            const value = parseInt(thresholdSlider.value);
+            thresholdValue.textContent = value;
+            applyThreshold(value);
+        });
+
+        invertToggle.addEventListener('change', () => {
+            applyThreshold(parseInt(thresholdSlider.value));
+        });
+
+        exportButton.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'monochrome.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    </script>
+</body>
+
+</html>
