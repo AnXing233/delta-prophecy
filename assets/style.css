@@ -1,0 +1,356 @@
+@font-face {
+  font-family: "ProphecyType";
+  src: url("./fonts/PROPHECYTYPE.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* 目哉像素 */
+@font-face {
+  font-family: "Prophecy-MZPX";
+  src: url("./fonts/MZPXorig.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* x12y16MaruMonica 12x16莫妮卡圆像素 */
+@font-face {
+  font-family: "Prophecy-monica";
+  src: url("./fonts/x12y16MaruMonicaForDRCN-20250629.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+/* KHドットフォント神楽坂12 (明朝体) */
+@font-face {
+  font-family: "Prophecy-Kagurazaka";
+  src: url("./fonts/KH-Dot-Kagurazaka-12.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* 凤凰点阵体16px */
+@font-face {
+  font-family: "Prophecy-VonwaonBitmap";
+  src: url("./fonts/VonwaonBitmap-12px.ttf") format("truetype");
+  font-display: swap;
+}
+/* Windows XP的台湾新细明体点阵 */
+@font-face {
+  font-family: "Prophecy-Mingliu";
+  src: url("./fonts/MINGLIU-12PX.TTF") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DTMSans";
+  src: url("./fonts/DTM-Sans.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DTMSansAlt";
+  src: url("./fonts/DeterminationMonoInternational.ttf");
+  font-display: swap;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "DTMSans", "DTMSansAlt", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background: black;
+}
+
+a {
+  color: cyan;
+  text-decoration: none;
+}
+#textContainer {
+  width: 75vw;
+  max-width: 425px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+  font-family: "ProphecyType", "Prophecy-monica", "unifont", serif;
+  font-size: 32px;
+  /* line-height: 150%; */
+  color: transparent;
+  background-size: 256px 256px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  mix-blend-mode: screen;
+  animation: scrollBg 30s linear infinite;
+  background-repeat: repeat;
+}
+
+@keyframes scrollBg {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 512px 512px;
+  }
+}
+
+#output {
+  position: relative;
+  width: 90vw;
+  max-width: 512px;
+  aspect-ratio: 2 / 1;
+  max-height: 256px;
+}
+
+canvas {
+  position: absolute;
+  width: 90vw;
+  max-width: 512px;
+  height: auto;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  background: transparent;
+}
+
+#ghostIcon {
+  z-index: 1;
+  opacity: 0.4;
+  pointer-events: none;
+  top: -50px;
+}
+
+#ghostIcon2 {
+  z-index: 1;
+  opacity: 0.2;
+  pointer-events: none;
+  top: -50px;
+}
+
+#panel {
+  z-index: 2;
+  top: -50px;
+}
+
+#background {
+  position: absolute;
+  width: 90vw;
+  max-width: 512px;
+  height: auto;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  opacity: 0.5;
+}
+
+body.susie-theme #background {
+  opacity: 0.5;
+}
+
+input[type="file"],
+input[type="text"] {
+  margin-top: 10px;
+  padding: 5px;
+  width: 75vw;
+  max-width: 512px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+h1 {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+footer {
+  margin-top: 20px;
+  padding: 10px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+  max-width: 512px;
+}
+
+.alt-font {
+  font-family: "ProphecyType", serif;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 125px;
+  max-width: 512px;
+  height: 10px;
+  background: transparent;
+  margin-top: 10px;
+  padding: 0;
+  border-radius: 0px;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0px;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: white;
+  border: 0px;
+  margin-top: -4px;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+#directions {
+  max-width: 512px;
+  text-align: center;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+input[type="text"] {
+  font-family: "DTMSans", "DTMSansAlt", sans-serif;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 5px 10px;
+  outline: none;
+  border-radius: 0px;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #fff;
+  box-shadow: 0 0 5px white;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  font-family: "DTMSans", "DTMSansAlt", sans-serif;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 0px;
+  user-select: none;
+  text-align: center;
+}
+
+.custom-file-upload:hover {
+  background-color: #222;
+  border-color: #fff;
+}
+
+.custom-file-upload:active {
+  background-color: #111;
+}
+
+#sineWrapper {
+  will-change: transform;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+select#styleSelect {
+  font-family: "DTMSans", "DTMSansAlt", sans-serif;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 5px 10px;
+  border-radius: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  margin-top: 10px;
+  width: 125px;
+  max-width: 512px;
+}
+
+select#styleSelect:hover {
+  background-color: #222;
+  border-color: #fff;
+}
+
+select#styleSelect:focus {
+  outline: none;
+  border-color: #fff;
+  box-shadow: 0 0 5px white;
+}
+
+select#fontSelect {
+  font-family: "DTMSans", "DTMSansAlt", sans-serif;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  padding: 5px 10px;
+  border-radius: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  margin-top: 10px;
+  width: 125px;
+  max-width: 512px;
+}
+
+select#fontSelect:hover {
+  background-color: #222;
+  border-color: #fff;
+}
+
+select#fontSelect:focus {
+  outline: none;
+  border-color: #fff;
+  box-shadow: 0 0 5px white;
+}
