@@ -38,6 +38,12 @@
   src: url("./fonts/MINGLIU-12PX.TTF") format("truetype");
   font-display: swap;
 }
+/* unifont */
+@font-face {
+  font-family: "unifont";
+  src: url("./fonts/unifont-16.0.04.otf") format("opentype");
+  font-display: swap;
+}
 
 @font-face {
   font-family: "DTMSans";
