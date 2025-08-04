@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>Deltarune Prophecy Panel Generator<br>Delrarune 预言文本生成器</h1>
+    <h1>Deltarune Prophecy Panel Generator<br>Deltarune 预言文本生成器</h1>
     <input type="file" id="imgInput" accept="image/*" style="display:none;" />
     <label for="imgInput" class="custom-file-upload">上传图片</label>
     <input type="text" id="textInput" placeholder="Enter prophecy text" />
@@ -24,9 +24,17 @@
     <div style="margin-top: 10px;">
         <label for="fontSelect">字体样式：</label>
         <select id="fontSelect">
-            <option value="default">默认（PropheryType+12x16莫妮卡圆像素）</option>
-            <option value="default-mzpx">默认+目哉像素（PropheryType+目哉像素）</option>
-            <option value="default-kagurazaka">默认+KHドット神楽坂12（PropheryType+KHドット神楽坂12+新细明体点阵）</option>            
+            <option value="default">默认（
+                <span style="font-family: ProphecyType;">PropheryType</span>+
+                <span style="font-family: Prophecy-monica;">12x16莫妮卡圆像素</span>）</option>
+            <option value="default-mzpx">默认+目哉像素（
+                <span style="font-family: ProphecyType;">PropheryType</span>+
+                <span style="font-family: Prophecy-MZPX;">目哉像素</span>）</option>
+            <option value="default-kagurazaka">默认+KHドット神楽坂12（
+                <span style="font-family: ProphecyType;">PropheryType</span>+
+                <span style="font-family: Prophecy-Kagurazaka;">KHドット神楽坂12</span>+
+                <span style="font-family: Prophecy-VonwaonBitmap;">凤凰点阵体12px</span>+
+                <span style="font-family: Prophecy-Mingliu;">新细明体点阵</span>）</option>            
         </select>
     </div>
     <div style="display: flex; justify-content: center; width: 100%;">
